@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import swaggerDocs from './config/swagger';
 import authRouter from './routes/authRouter';
 import userRouter from './routes/userRouter';
+import studentRouter from './routes/studentRouter';
 
 dotenv.config();
 
@@ -19,5 +20,6 @@ swaggerDocs(app);
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/student', studentRouter);
 
 export default app;

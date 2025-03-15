@@ -142,10 +142,23 @@ route.post('/login', AuthValidations.loginValidation, validationMiddleware, Auth
  * /auth/logout:
  *   delete:
  *     summary: Logout user
- *     description: Logout a user by invalidating their token.
+ *     description: Logout a user by invalidating their token and user ID.
  *     tags: [Authentication]
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 example: "f099f47d-7d40-4012-ba33-799bec163d18"
  *     responses:
  *       200:
  *         description: User logged out successfully

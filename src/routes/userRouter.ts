@@ -13,15 +13,19 @@ const route = Router();
  *     summary: Show user
  *     description: Show a user by their user ID.
  *     tags: [User]
- *     parameters:
- *       - in: query
- *         name: userId
- *         required: true
- *         description: The user ID (UUID).
- *         schema:
- *           type: string
- *           format: uuid
- *           example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 example: "f099f47d-7d40-4012-ba33-799bec163d18"
  *     responses:
  *       200:
  *         description: User found successfully.
@@ -133,15 +137,19 @@ route.put('/update', authenticationMiddleware, UserValidations.updateValidation,
  *     summary: Delete user
  *     description: Delete a user by their user ID.
  *     tags: [User]
- *     parameters:
- *       - in: query
- *         name: userId
- *         required: true
- *         description: The user ID (UUID) to delete.
- *         schema:
- *           type: string
- *           format: uuid
- *           example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 example: "f099f47d-7d40-4012-ba33-799bec163d18"
  *     responses:
  *       200:
  *         description: User deleted successfully.

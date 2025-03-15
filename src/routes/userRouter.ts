@@ -11,24 +11,20 @@ const route = Router();
  * /user/show:
  *   get:
  *     summary: Show user
- *     description: show a user by their user ID
+ *     description: Show a user by their user ID.
  *     tags: [User]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - userId
- *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         required: true
+ *         description: The user ID (UUID).
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *           example: "f099f47d-7d40-4012-ba33-799bec163d18"
  *     responses:
  *       200:
- *         description: User show successfully
+ *         description: User found successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -42,6 +38,17 @@ const route = Router();
  *                   example: "User found"
  *                 data:
  *                   type: object
+ *                   properties:
+ *                     userId:
+ *                       type: string
+ *                       format: uuid
+ *                       example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *                     name:
+ *                       type: string
+ *                       example: "test"
+ *                     email:
+ *                       type: string
+ *                       example: "test@example.com"
  *       400:
  *         description: Invalid request data
  *       401:
@@ -58,7 +65,7 @@ route.get('/show', authenticationMiddleware, UserValidations.showValidation, val
  * /user/update:
  *   put:
  *     summary: Update user
- *     description: update a user by their user ID
+ *     description: Update a user by their user ID.
  *     tags: [User]
  *     requestBody:
  *       required: true
@@ -68,14 +75,22 @@ route.get('/show', authenticationMiddleware, UserValidations.showValidation, val
  *             type: object
  *             required:
  *               - userId
+ *               - name
+ *               - email
  *             properties:
  *               userId:
  *                 type: string
  *                 format: uuid
  *                 example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *               name:
+ *                 type: string
+ *                 example: "Test"
+ *               email:
+ *                 type: string
+ *                 example: "test@example.com"
  *     responses:
  *       200:
- *         description: User update successfully
+ *         description: User updated successfully
  *         content:
  *           application/json:
  *             schema:
@@ -89,6 +104,17 @@ route.get('/show', authenticationMiddleware, UserValidations.showValidation, val
  *                   example: "User updated"
  *                 data:
  *                   type: object
+ *                   properties:
+ *                     userId:
+ *                       type: string
+ *                       format: uuid
+ *                       example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *                     name:
+ *                       type: string
+ *                       example: "John Doe"
+ *                     email:
+ *                       type: string
+ *                       example: "johndoe@example.com"
  *       400:
  *         description: Invalid request data
  *       401:
@@ -105,24 +131,20 @@ route.put('/update', authenticationMiddleware, UserValidations.updateValidation,
  * /user/delete:
  *   delete:
  *     summary: Delete user
- *     description: delete a user by their user ID
+ *     description: Delete a user by their user ID.
  *     tags: [User]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - userId
- *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         required: true
+ *         description: The user ID (UUID) to delete.
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *           example: "f099f47d-7d40-4012-ba33-799bec163d18"
  *     responses:
  *       200:
- *         description: User delete successfully
+ *         description: User deleted successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -146,4 +168,5 @@ route.put('/update', authenticationMiddleware, UserValidations.updateValidation,
  *         description: Internal server error
  */
 route.delete('/delete', authenticationMiddleware, UserValidations.deleteValidation, validationMiddleware, UserController.delete);
+
 export default route;

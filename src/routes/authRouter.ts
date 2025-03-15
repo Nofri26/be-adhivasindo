@@ -58,11 +58,6 @@ const route = Router();
  *                     email:
  *                       type: string
  *                       example: "test@example.com"
- *                     password:
- *                       type: string
- *                     token:
- *                       type: string
- *                       example: null
  *                     created_at:
  *                       type: string
  *                       format: date-time
@@ -83,7 +78,7 @@ route.post('/register', AuthValidations.registerValidation, validationMiddleware
  * /auth/login:
  *   post:
  *     summary: Login a user
- *     description: Login a user.
+ *     description: Login a user and return a token.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -103,7 +98,7 @@ route.post('/register', AuthValidations.registerValidation, validationMiddleware
  *                 example: password
  *     responses:
  *       200:
- *         description: User Login successfully.
+ *         description: User login successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -114,23 +109,25 @@ route.post('/register', AuthValidations.registerValidation, validationMiddleware
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "User Login successfully"
+ *                   example: "User login successfully"
  *                 data:
  *                   type: object
  *                   properties:
  *                     token:
  *                       type: string
+ *                       example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.Mvh1AsU4eHcJpZsWzT7Af27Re9QdDBHQ"
  *                     user:
  *                       type: object
  *                       properties:
  *                         id:
  *                           type: string
- *                           name:
- *                             type: string
- *                             example: "Test"
- *                           email:
- *                             type: string
- *                             example: test@example.com
+ *                           example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *                         name:
+ *                           type: string
+ *                           example: "Test"
+ *                         email:
+ *                           type: string
+ *                           example: test@example.com
  *       422:
  *         description: Failed validation request
  *       400:
@@ -145,21 +142,10 @@ route.post('/login', AuthValidations.loginValidation, validationMiddleware, Auth
  * /auth/logout:
  *   delete:
  *     summary: Logout user
- *     description: Logout a user by their user ID
+ *     description: Logout a user by invalidating their token.
  *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - userId
- *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 example: "f099f47d-7d40-4012-ba33-799bec163d18"
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User logged out successfully
@@ -173,19 +159,15 @@ route.post('/login', AuthValidations.loginValidation, validationMiddleware, Auth
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "User Logout Successfully"
+ *                   example: "User logged out successfully"
  *                 data:
  *                   type: object
  *                   properties:
  *                     message:
  *                       type: string
  *                       example: "Logged out successfully"
- *       400:
- *         description: Invalid request data
  *       401:
  *         description: Unauthorized
- *       404:
- *         description: User not found
  *       500:
  *         description: Internal server error
  */
